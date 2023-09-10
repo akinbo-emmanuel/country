@@ -22,10 +22,10 @@ const CountryList = () => {
   }, []);
 
   return (
-    <div className="container mx-auto p-4">
+    <div className="container mx-auto p-4 ">
       <h1 className="text-3xl font-bold mb-4">Country List</h1>
       {loading ? ( // Display spinner while loading
-        <div className="flex justify-center items-center h-32">
+        <div className="container mx-auto p-4 flex justify-center items-center h-screen">
           <InfinitySpin 
             width='200'
             color="#4fa94d"
