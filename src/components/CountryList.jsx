@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { fetchCountries } from '../api';
-import { Loader } from 'react-loader-spinner'; // Import Loader from react-loader-spinner
+import { InfinitySpin } from 'react-loader-spinner'; 
 
 const CountryList = () => {
   const [countries, setCountries] = useState([]);
@@ -26,7 +26,10 @@ const CountryList = () => {
       <h1 className="text-3xl font-bold mb-4">Country List</h1>
       {loading ? ( // Display spinner while loading
         <div className="flex justify-center items-center h-32">
-          <Loader type="TailSpin" color="#007BFF" height={50} width={50} />
+          <InfinitySpin 
+            width='200'
+            color="#4fa94d"
+            />
         </div>
       ) : (
         <ul className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">

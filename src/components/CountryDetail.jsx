@@ -1,11 +1,13 @@
 // src/components/CountryDetail.js
-import React, { useEffect, useState } from 'react';
-import { useParams, Link } from 'react-router-dom'; // Import Link from react-router-dom
+import { useEffect, useState } from 'react';
+import { useParams, Link } from 'react-router-dom';
 import { fetchCountries } from '../api';
+import { InfinitySpin } from 'react-loader-spinner';
 
 const CountryDetail = () => {
   const { name } = useParams();
   const [country, setCountry] = useState(null);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const getCountry = async () => {
@@ -15,6 +17,7 @@ const CountryDetail = () => {
           (c) => c.name?.common === name
         );
         setCountry(selectedCountry);
+        setLoading(false);
       } catch (error) {
         console.error('Error fetching data: ', error);
       }
@@ -22,6 +25,17 @@ const CountryDetail = () => {
 
     getCountry();
   }, [name]);
+
+  if (loading) {
+    return (
+      <div className="container mx-auto p-4 flex justify-center items-center h-screen">
+        <InfinitySpin 
+            width='200'
+            color="#4fa94d"
+            />
+      </div>
+    );
+  }
 
   if (!country) {
     return <div>Loading...</div>;
@@ -31,7 +45,6 @@ const CountryDetail = () => {
     <div className="container mx-auto p-4">
       <div className="bg-white rounded-lg shadow-lg p-6">
         <div className="mb-4">
-          {/* Add a back button using the Link component */}
           <Link to="/" className="text-blue-600 hover:underline">
             &larr; Back to Country List
           </Link>
@@ -53,7 +66,12 @@ const CountryDetail = () => {
               <strong>Languages:</strong> {Object.values(country.languages).join(', ')}
             </p>
             <p className="text-lg">
-              <strong>Currency:</strong> {country.currencies[0]?.name}
+              <strong>Currencies:</strong> {Object.keys(country.currencies).map((currencyCode) => (
+                <span key={currencyCode}>
+                  {country.currencies[currencyCode].name} ({country.currencies[currencyCode].symbol})
+                  {currencyCode !== Object.keys(country.currencies)[Object.keys(country.currencies).length - 1] ? ', ' : ''}
+                </span>
+              ))}
             </p>
             <p className="text-lg">
               <strong>Timezone:</strong> {country.timezones[0]}
