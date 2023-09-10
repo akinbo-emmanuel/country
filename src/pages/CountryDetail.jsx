@@ -42,10 +42,10 @@ const CountryDetail = () => {
   }
 
   return (
-    <div className="container mx-auto p-4">
+    <div className="container mx-auto p-4 font-sans ">
       <div className="bg-white rounded-lg shadow-lg p-6">
         <div className="mb-4">
-          <Link to="/" className="text-blue-600 hover:underline">
+          <Link to="/" className="text-blue-600 hover:none">
             &larr; Back to Country List
           </Link>
         </div>
